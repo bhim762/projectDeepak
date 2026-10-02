@@ -1,0 +1,2 @@
+* server name: uvicorn main:app --reload run on vs code terminal
+* and open on the browser:http://localhost:8000/docs

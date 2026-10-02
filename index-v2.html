@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mental Health Signal — Student Wellness Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF3EF;--ink:#14211C;--soft:#52645B;--mute:#8A9A91;--card:rgba(255,255,255,.74);--edge:rgba(255,255,255,.95);--line:#D5E1D8;--field:#F3F8F5;--pine:#1F5C4B;--pine2:#143D32;--tint:#DCEFE5;--coral:#E0554F;--amber:#E5AE3A;--sage:#392199;--sh:0 1px 2px rgba(20,33,28,.05),0 18px 40px -14px rgba(20,33,28,.16);--fd:'Fraunces',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',monospace}
+@media(prefers-color-scheme:dark){:root{--bg:#0B1310;--ink:#E8F2EC;--soft:#A5B7AD;--mute:#6E8379;--card:rgba(22,34,29,.72);--edge:rgba(255,255,255,.07);--line:#26382F;--field:#d05761;--pine:#2F8A6B;--pine2:#A6E8C9;--tint:#18362B}.bg i{opacity:.16!important}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.5;-webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(900px 520px at 88% -10%,var(--tint),transparent 62%)}
+.bg i{position:absolute;width:440px;height:440px;border-radius:50%;filter:blur(90px);opacity:.42;animation:float 18s ease-in-out infinite alternate}
+.bg i:nth-child(1){background:#1f1cb4;top:-140px;left:-120px}.bg i:nth-child(2){background:#F2D58A;bottom:-180px;right:-100px;animation-delay:-8s}
+@keyframes float{to{transform:translate(70px,40px) scale(1.15)}}
+
+header{max-width:1200px;margin:0 auto;padding:60px 24px 28px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--pine);background:var(--tint);padding:6px 14px;border-radius:99px;margin-bottom:20px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sage);box-shadow:0 0 0 0 var(--sage);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font:500 clamp(2.5rem,5.5vw,4rem)/1.04 var(--fd);letter-spacing:-.02em;margin:0 0 14px;color:var(--pine2)}
+h1 em{color:var(--pine);background:linear-gradient(90deg,var(--pine),var(--sage));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{max-width:580px;font-size:16.5px;color:var(--soft);margin:0 0 20px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}.pills span{font-size:12.5px;font-weight:500;color:var(--soft);background:var(--card);border:1px solid var(--edge);padding:6px 12px;border-radius:99px;backdrop-filter:blur(8px)}
+
+.layout{max-width:1200px;margin:0 auto;padding:0 24px 36px;display:grid;grid-template-columns:1.55fr 1fr;gap:24px;align-items:start}
+.card{background:var(--card);border:1px solid var(--edge);border-radius:24px;box-shadow:var(--sh);backdrop-filter:blur(14px)}
+.prog{position:sticky;top:12px;z-index:5;display:flex;align-items:center;gap:14px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;color:var(--soft)}
+.prog b{font-family:var(--fm);color:var(--pine);min-width:38px}
+.bar{flex:1;height:8px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pine),var(--sage));border-radius:9px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+.ghost{font:600 12.5px var(--fb);color:var(--pine);background:var(--tint);border:0;border-radius:9px;padding:8px 12px;cursor:pointer;transition:.15s}.ghost:hover{filter:brightness(.95)}
+.step{padding:26px 28px 30px;margin-bottom:16px;animation:up .6s both;animation-delay:var(--d)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.sh{display:flex;gap:14px;align-items:center;margin-bottom:22px}
+.sh b{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--pine),var(--sage));color:#fff;font:700 13px var(--fm)}
+h2{font:600 19px var(--fd);margin:0;color:var(--pine2)}.sh p{margin:0;font-size:13px;color:var(--mute)}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:20px 18px}.s2{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.lab{display:flex;justify-content:space-between;align-items:baseline}
+label{font-size:13px;font-weight:600;color:var(--soft)}
+output{font:700 13px var(--fm);color:var(--pine);background:var(--tint);padding:2px 9px;border-radius:7px}
+small{font-size:11.5px;color:var(--mute)}
+.err{display:none;font-size:12px;font-weight:500;color:var(--coral)}.field.bad .err{display:block}
+input[type=number],input[type=text],select{font:500 15px var(--fb);color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;appearance:none;transition:.15s}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%238A9A91' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;cursor:pointer}
+input:hover,select:hover{border-color:var(--mute)}
+input:focus,select:focus{outline:0;border-color:var(--pine);box-shadow:0 0 0 4px var(--tint)}
+.field.bad input,.field.bad select{border-color:var(--coral);background:color-mix(in srgb,var(--coral) 8%,var(--field))}
+.field.bad .chips{outline:1.5px solid var(--coral);outline-offset:4px;border-radius:12px}
+input[type=range]{--p:50%;appearance:none;height:8px;border-radius:9px;border:0;padding:0;margin:8px 0;cursor:pointer;background:linear-gradient(90deg,var(--pine) var(--p),var(--line) var(--p))}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--pine);box-shadow:0 2px 8px rgba(0,0,0,.2);transition:transform .15s}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--pine)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{flex:1;min-width:84px;cursor:pointer}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:block;text-align:center;font-size:13.5px;font-weight:600;color:var(--soft);background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:11px 10px;transition:.15s}
+.chip:hover span{border-color:var(--mute);transform:translateY(-1px)}
+.chip input:focus-visible+span{box-shadow:0 0 0 4px var(--tint)}
+.chip input:checked+span{background:var(--pine);border-color:var(--pine);color:#280e55;box-shadow:0 8px 18px -8px var(--pine)}
+.chip[data-v=High] input:checked+span{background:#D08333;border-color:#D08333}
+.chip[data-v=Very_High] input:checked+span{background:var(--coral);border-color:var(--coral)}
+.day{background:var(--field);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.day h3{margin:0 0 10px;font-size:12.5px;font-weight:700;color:var(--soft);display:flex;justify-content:space-between}
+.day h3 em{font-style:normal;font-weight:500;color:var(--mute)}
+.map{display:flex;height:14px;border-radius:9px;overflow:hidden;background:var(--line);gap:2px}.map i{transition:width .35s;min-width:0}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12px;color:var(--soft)}.leg span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:3px;background:var(--c);margin-right:6px}
+.go{width:100%;font:700 16px var(--fb);color:#fff;background:linear-gradient(135deg,var(--pine),var(--sage));border:0;border-radius:16px;padding:18px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:10px;box-shadow:0 14px 28px -12px var(--pine);transition:.2s}
+.go:hover{transform:translateY(-2px);box-shadow:0 18px 32px -12px var(--pine)}.go:active{transform:scale(.99)}.go:disabled{opacity:.7;cursor:progress;transform:none}
+.spin{display:none;width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .7s linear infinite}.go.load .spin{display:block}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.result{position:sticky;top:12px;min-height:560px;display:flex;color:#EAF5EF;border:0;background:radial-gradient(500px 300px at 80% 0,rgba(124,209,176,.28),transparent 70%),linear-gradient(165deg,#0F2F26,#e25d75);box-shadow:0 30px 60px -20px rgba(15,47,38,.5)}
+.ri{width:100%;padding:36px 28px;display:flex;align-items:center;justify-content:center}
+.st{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;animation:up .5s both}
+.gauge{width:100%;max-width:270px;overflow:visible;margin-bottom:6px}
+.trk{fill:none;stroke:rgba(255,255,255,.12);stroke-width:14;stroke-linecap:round}
+.fill{fill:none;stroke:url(#gg);stroke-width:14;stroke-linecap:round;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset 1.3s cubic-bezier(.22,1,.36,1)}
+.ticks line{stroke:rgba(255,255,255,.3);stroke-width:1.5}.gauge text{fill:rgba(255,255,255,.5);font:500 10px var(--fm)}
+.needle{transform-origin:120px 140px;transform:rotate(-90deg);transition:transform 1.3s cubic-bezier(.22,1,.36,1)}.needle line{stroke:#fff;stroke-width:3;stroke-linecap:round}
+.hub{fill:#fff}
+.il{font:italic 500 21px var(--fd);margin:10px 0 6px}.ic{font-size:13.5px;color:rgba(234,245,239,.65);max-width:240px;margin:0}
+.ring{width:84px;height:84px;border-radius:50%;border:2px solid rgba(255,255,255,.2);position:relative;margin-bottom:24px}
+.ring::before,.ring::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(234,245,239,.55);animation:po 1.8s ease-out infinite}.ring::after{animation-delay:.9s}
+@keyframes po{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.sn{font:700 60px/1 var(--fm);color:#fff;letter-spacing:-.03em}.sn small{font-size:17px;color:rgba(234,245,239,.55);font-weight:500}
+.band{display:inline-block;margin:12px 0;font:600 13px var(--fb);padding:6px 14px;border-radius:99px;color:#0F2F26;background:var(--bc,#7CD1B0)}
+.sc{font-size:13.5px;color:rgba(234,245,239,.78);max-width:270px;margin:0 0 16px}
+.tips{list-style:none;padding:0;margin:0 0 22px;width:100%;display:flex;flex-direction:column;gap:8px;text-align:left}
+.tips li{font-size:12.8px;color:rgba(234,245,239,.85);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;display:flex;gap:10px}
+.btn2{font:600 13.5px var(--fb);color:#e61a9b;background:#fff;border:0;border-radius:11px;padding:11px 22px;cursor:pointer;transition:.15s}.btn2:hover{box-shadow:0 8px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
+.ei{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(224,85,79,.2);color:#FF9B95;border:1.5px solid rgba(255,155,149,.4);font:700 19px var(--fm);margin-bottom:16px}
+.el{font:italic 500 21px var(--fd);margin:0 0 8px}.ec{font-size:13.5px;color:rgba(234,245,239,.75);max-width:260px;margin:0 0 22px}
+footer{max-width:1200px;margin:0 auto;padding:0 24px 50px}footer p{font-size:12.5px;color:var(--mute);text-align:center;margin:0}
+@media(max-width:940px){.layout{grid-template-columns:1fr}.result{position:static;min-height:440px}}
+@media(max-width:560px){header{padding:40px 16px 20px}.layout{padding:0 14px 28px}.step{padding:22px 18px}.g{grid-template-columns:1fr}.prog{font-size:12px}.ghost{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i></div>
+
+<header>
+  <span class="eyebrow">Student Wellness Analytics</span>
+  <h1>Mental Health <em>Signal</em></h1>
+  <p class="sub">A quick read on how your habits, screen time and stress are trending — modeled from your daily rhythm, not a diagnosis.</p>
+  <div class="pills"><span>⏱ Under a minute</span><span>🧠 ML-powered estimate</span><span>🛡 Not a diagnosis</span></div>
+</header>
+
+<main class="layout">
+  <section>
+    <div class="card prog"><span>Progress</span><b id="pct">0%</b><div class="bar"><i id="bar"></i></div><button type="button" class="ghost" id="sample">✨ Fill sample</button></div>
+    <form id="f" novalidate>
+      <div id="steps"></div>
+      <button type="submit" class="go" id="go"><span>Read my signal</span><i class="spin"></i></button>
+    </form>
+  </section>
+
+  <aside class="card result" aria-live="polite"><div class="ri">
+    <div class="st" id="s-idle">
+      <svg class="gauge" viewBox="0 0 240 160" aria-hidden="true"><path class="trk" d="M 30 140 A 100 100 0 0 1 210 140"/><g class="ticks"></g></svg>
+      <p class="il">Your score will appear here</p>
+      <p class="ic">Fill in the form and submit to generate a predicted mental health score from 0–10.</p>
+    </div>
+    <div class="st" id="s-load" hidden>
+      <div class="ring"></div><p class="il">Reading the signal…</p>
+      <p class="ic">Running your habits through the model. The first request can take up to a minute.</p>
+    </div>
+    <div class="st" id="s-res" hidden>
+      <svg class="gauge" viewBox="0 0 240 160" aria-hidden="true">
+        <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E0554F"/><stop offset=".45" stop-color="#E5AE3A"/><stop offset="1" stop-color="#4CC49A"/></linearGradient></defs>
+        <path class="trk" d="M 30 140 A 100 100 0 0 1 210 140"/><path class="fill" id="fill" d="M 30 140 A 100 100 0 0 1 210 140"/>
+        <g class="ticks"></g><text x="30" y="158" text-anchor="middle">0</text><text x="210" y="158" text-anchor="middle">10</text>
+        <g class="needle" id="needle"><line x1="120" y1="140" x2="120" y2="66"/></g><circle class="hub" cx="120" cy="140" r="6"/>
+      </svg>
+      <div class="sn"><span id="sn">0.00</span><small>/10</small></div>
+      <span class="band" id="band">—</span>
+      <p class="sc" id="sc"></p>
+      <ul class="tips" id="tips"></ul>
+      <button type="button" class="btn2" id="again">Run another read</button>
+    </div>
+    <div class="st" id="s-err" hidden>
+      <div class="ei" aria-hidden="true">!</div><p class="el" id="el"></p><p class="ec" id="ec"></p>
+      <button type="button" class="btn2" id="retry">Try again</button>
+    </div>
+  </div></aside>
+</main>
+
+<footer><p>Built for informational purposes only — this is not a clinical assessment. If you're struggling, please talk to someone you trust.</p></footer>
+
+<script>
+(() => {
+"use strict";
+const API_BASE = "https://mansik-santulan-score.onrender.com";
+const $ = (id) => document.getElementById(id);
+
+/* ---------- build the form ---------- */
+const F = (n, l, inner, o = {}) => `<div class="field${o.s ? " s2" : ""}" data-f="${n}"><div class="lab"><label${o.for ? ` for="${n}"` : ""}>${l}</label>${o.out || ""}</div>${inner}${o.h ? `<small>${o.h}</small>` : ""}<span class="err"></span></div>`;
+const num = (n, l, ph, min, max, step, h) => F(n, l, `<input type="number" id="${n}" name="${n}" min="${min}" ${max ? `max="${max}"` : ""} step="${step}" placeholder="${ph}" required>`, { for: 1, h });
+const chips = (n, l, o) => F(n, l, `<div class="chips">${o.map(([v, t]) => `<label class="chip" data-v="${v}"><input type="radio" name="${n}" value="${v}"><span>${t}</span></label>`).join("")}</div>`, { s: 1 });
+const sel = (n, l, o) => F(n, l, `<select id="${n}" name="${n}" required><option value="" disabled selected hidden>Select</option>${o.map((x) => `<option>${x}</option>`).join("")}</select>`, { for: 1 });
+const rng = (n, l, v, max, s) => F(n, l, `<input type="range" id="${n}" name="${n}" min="0" max="${max}" step="0.5" value="${v}">`, { for: 1, s, out: `<output id="o_${n}"></output>` });
+const step = (i, t, d, b) => `<section class="card step" style="--d:${i * 90}ms"><div class="sh"><b>0${i}</b><div><h2>${t}</h2><p>${d}</p></div></div><div class="g">${b}</div></section>`;
+
+$("steps").innerHTML =
+  step(1, "Profile", "A little about you",
+    num("age", "Age", "e.g. 21", 10, 100, 1, "Between 10 and 100") +
+    F("country", "Country", `<input type="text" id="country" name="country" list="cl" placeholder="e.g. India" autocomplete="off" required><datalist id="cl">${["India","USA","Canada","Australia","UK","Germany","Mexico","Turkey","France"].map((c) => `<option value="${c}">`).join("")}</datalist>`, { for: 1, h: "Not listed? Type it anyway." }) +
+    chips("gender", "Gender", [["Male", "Male"], ["Female", "Female"]])) +
+  step(2, "Academic & digital habits", "How you study and scroll",
+    chips("academic_level", "Academic level", [["High School", "🎒 High School"], ["Undergraduate", "🎓 Undergraduate"], ["Graduate", "📚 Graduate"]]) +
+    sel("most_used_platform", "Most-used platform", ["Facebook","Instagram","Snapchat","Twitter","YouTube","TikTok","LinkedIn","LINE","KakaoTalk","VKontakte","WhatsApp","WeChat"]) +
+    num("daily_unlocks", "Daily phone unlocks", "e.g. 60", 0, 0, 1, "Roughly how many times a day") +
+    chips("purpose_of_use", "Primary purpose", [["Networking", "Networking"], ["Education", "Education"], ["Entertainment", "Entertainment"], ["News", "News"]]) +
+    rng("avg_daily_usage_hours", "Average daily screen time", 4, 24, 1)) +
+  step(3, "Lifestyle & stress", "Sleep, movement and how you feel",
+    rng("study_hours", "Study hours / day", 3, 24) + rng("physical_activity_hours", "Physical activity / day", 1, 24) +
+    rng("sleep_hours_per_night", "Sleep / night", 7, 24, 1) +
+    `<div class="s2 day"><h3>Your 24-hour map <em id="dn"></em></h3><div class="map" id="map"></div><div class="leg" id="leg"></div></div>` +
+    chips("stress_level", "Perceived stress level", [["Low", "😌 Low"], ["Medium", "😐 Medium"], ["High", "😟 High"], ["Very_High", "😣 Very High"]]));
+
+const form = $("f");
+const REQ = ["age","gender","country","academic_level","most_used_platform","purpose_of_use","daily_unlocks","stress_level"];
+const DAY = [["sleep_hours_per_night","Sleep","#4C7BD9"],["study_hours","Study","#E5AE3A"],["physical_activity_hours","Activity","#3FA27A"],["avg_daily_usage_hours","Screen","#D9534F"]];
+
+/* ---------- gauge ticks ---------- */
+document.querySelectorAll(".ticks").forEach((g) => {
+  for (let i = 0; i <= 10; i += 2) {
+    const a = Math.PI - (i / 10) * Math.PI, l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    [["x1", 100], ["y1", 100], ["x2", 90], ["y2", 90]].forEach(([k, r]) => l.setAttribute(k, (k[0] === "x" ? 120 + r * Math.cos(a) : 140 - r * Math.sin(a)).toFixed(1)));
+    g.appendChild(l);
+  }
+});
+
+/* ---------- live UI: sliders, day map, progress ---------- */
+function refresh() {
+  form.querySelectorAll("input[type=range]").forEach((r) => {
+    r.style.setProperty("--p", (r.value / r.max) * 100 + "%");
+    $("o_" + r.id).textContent = r.value + " h";
+  });
+  const vals = DAY.map(([k]) => +$(k).value), total = vals.reduce((a, b) => a + b, 0), k = total > 24 ? 24 / total : 1;
+  $("map").innerHTML = DAY.map(([, , c], i) => `<i style="width:${(vals[i] * k / 24) * 100}%;background:${c}"></i>`).join("");
+  $("leg").innerHTML = DAY.map(([, n, c], i) => `<span style="--c:${c}">${n} ${vals[i]}h</span>`).join("") + (total < 24 ? `<span style="--c:var(--line)">Free ${(24 - total).toFixed(1)}h</span>` : "");
+  $("dn").textContent = total > 24 ? "Screen time often overlaps — that's fine" : "";
+  const fd = new FormData(form), done = REQ.filter((n) => fd.get(n) && String(fd.get(n)).trim()).length, p = Math.round((done / REQ.length) * 100);
+  $("pct").textContent = p + "%"; $("bar").style.width = p + "%";
+}
+
+/* ---------- errors ---------- */
+const wrap = (n) => form.querySelector(`[data-f="${n}"]`);
+const setErr = (n, m) => { const w = wrap(n); if (!w) return; w.classList.add("bad"); w.querySelector(".err").textContent = m; };
+const clearErr = (n) => { const w = wrap(n); if (!w) return; w.classList.remove("bad"); w.querySelector(".err").textContent = ""; };
+const clearAll = () => form.querySelectorAll(".field").forEach((w) => { w.classList.remove("bad"); w.querySelector(".err").textContent = ""; });
+
+form.addEventListener("input", (e) => { const w = e.target.closest(".field"); if (w) clearErr(w.dataset.f); refresh(); });
+
+/* ---------- payload + validation ---------- */
+function collect() {
+  const fd = new FormData(form), s = (k) => (fd.get(k) || "").toString().trim();
+  const n = (k, int) => (s(k) === "" ? NaN : int ? parseInt(s(k), 10) : parseFloat(s(k)));
+  return { age: n("age", 1), gender: s("gender"), country: s("country"), academic_level: s("academic_level"), most_used_platform: s("most_used_platform"), purpose_of_use: s("purpose_of_use"),
+    avg_daily_usage_hours: n("avg_daily_usage_hours"), daily_unlocks: n("daily_unlocks", 1), study_hours: n("study_hours"), physical_activity_hours: n("physical_activity_hours"), sleep_hours_per_night: n("sleep_hours_per_night"), stress_level: s("stress_level") };
+}
+function validate(p) {
+  const e = [];
+  if (Number.isNaN(p.age)) e.push(["age", "Age is required."]); else if (p.age < 10 || p.age > 100) e.push(["age", "Must be between 10 and 100."]);
+  if (Number.isNaN(p.daily_unlocks)) e.push(["daily_unlocks", "This field is required."]); else if (p.daily_unlocks < 0) e.push(["daily_unlocks", "Can't be negative."]);
+  [["gender","Pick one."],["country","Enter your country."],["academic_level","Pick one."],["most_used_platform","Choose a platform."],["purpose_of_use","Pick one."],["stress_level","Pick a stress level."]].forEach(([k, m]) => { if (!p[k]) e.push([k, m]); });
+  return e;
+}
+
+/* ---------- states ---------- */
+const S = { idle: $("s-idle"), load: $("s-load"), res: $("s-res"), err: $("s-err") };
+const show = (n) => { Object.values(S).forEach((el) => (el.hidden = true)); S[n].hidden = false; };
+
+const bandOf = (s) => s < 4 ? ["Signal: strained", "#F08A84", "Your responses suggest elevated strain right now. Small shifts in sleep or screen time can go a long way."]
+  : s < 7 ? ["Signal: balanced", "#F0C466", "Your rhythm looks fairly steady, with some room to recover and reset."]
+  : ["Signal: strong", "#7CD9B3", "Your habits point to a well-supported, resilient baseline. Keep it up."];
+
+function tipsFor(p) {
+  const t = [];
+  if (p.sleep_hours_per_night < 6.5) t.push(["😴", "Sleep is on the short side — even 30 extra minutes can help."]);
+  if (p.avg_daily_usage_hours > 6) t.push(["📵", "Screen time is high — try a phone-free window each day."]);
+  if (p.daily_unlocks > 100) t.push(["🔔", "Frequent unlocks — batching notifications can reduce the pull."]);
+  if (p.physical_activity_hours < 0.5) t.push(["🚶", "A short daily walk is a gentle mood lift."]);
+  if (p.study_hours > 8) t.push(["⏳", "Long study days — schedule short breaks."]);
+  if (["High", "Very_High"].includes(p.stress_level)) t.push(["🤝", "Stress feels high — talking to someone you trust helps."]);
+  return (t.length ? t : [["✅", "Your habits look steady — keep your routine going."]]).slice(0, 3);
+}
+
+function renderResult(score, p) {
+  const c = Math.max(0, Math.min(10, score)), [label, color, ctx] = bandOf(c);
+  $("band").textContent = label; $("band").style.setProperty("--bc", color); $("sc").textContent = ctx;
+  $("tips").innerHTML = tipsFor(p).map(([i, m]) => `<li><span>${i}</span><span>${m}</span></li>`).join("");
+  const fill = $("fill"), needle = $("needle");
+  fill.style.transition = needle.style.transition = "none";
+  fill.style.strokeDashoffset = 314; needle.style.transform = "rotate(-90deg)"; $("sn").textContent = "0.00";
+  show("res");
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    fill.style.transition = needle.style.transition = "";
+    fill.style.strokeDashoffset = 314 * (1 - c / 10); needle.style.transform = `rotate(${-90 + c * 18}deg)`;
+    const t0 = performance.now();
+    (function tick(t) { const k = Math.min(1, (t - t0) / 1100); $("sn").textContent = (score * (1 - Math.pow(1 - k, 3))).toFixed(2); if (k < 1) requestAnimationFrame(tick); })(t0);
+  }));
+}
+const renderError = (l, c) => { $("el").textContent = l; $("ec").textContent = c; show("err"); };
+
+/* ---------- submit ---------- */
+form.addEventListener("submit", async (e) => {
+  e.preventDefault(); clearAll();
+  const p = collect(), errs = validate(p);
+  if (errs.length) {
+    errs.forEach(([k, m]) => setErr(k, m));
+    wrap(errs[0][0]).scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  const go = $("go"); go.disabled = true; go.classList.add("load"); show("load");
+  try {
+    const res = await fetch(`${API_BASE}/predict`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p) });
+    if (res.status === 422) {
+      const b = await res.json().catch(() => null); let hit = false;
+      if (b && Array.isArray(b.detail)) b.detail.forEach((d) => { const f = Array.isArray(d.loc) ? d.loc[d.loc.length - 1] : null; if (f && wrap(f)) { setErr(f, d.msg || "Invalid value."); hit = true; } });
+      return renderError("Check your inputs", hit ? "The API rejected a few fields — details are marked on the form." : "The API rejected this submission. Please review your inputs.");
+    }
+    if (!res.ok) { const b = await res.json().catch(() => null); return renderError("Prediction failed", b && typeof b.detail === "string" ? b.detail : `The API responded with status ${res.status}.`); }
+    const d = await res.json();
+    if (typeof d.predicted_mental_health_score !== "number") return renderError("Unexpected response", "The API responded, but the score was missing or malformed.");
+    renderResult(d.predicted_mental_health_score, p);
+  } catch (_) {
+    renderError("Can't reach the server", "The backend didn't respond. If it's on a free host it may be waking up — wait a moment and try again.");
+  } finally { go.disabled = false; go.classList.remove("load"); }
+});
+
+/* ---------- extras ---------- */
+$("sample").addEventListener("click", () => {
+  const v = { age: 21, gender: "Female", country: "India", academic_level: "Undergraduate", most_used_platform: "Instagram", purpose_of_use: "Entertainment", daily_unlocks: 85, avg_daily_usage_hours: 5.5, study_hours: 4, physical_activity_hours: 0.5, sleep_hours_per_night: 6.5, stress_level: "High" };
+  Object.entries(v).forEach(([k, x]) => { const r = form.querySelector(`input[type=radio][name="${k}"][value="${x}"]`); if (r) r.checked = true; else $(k).value = x; });
+  clearAll(); refresh();
+});
+$("again").onclick = $("retry").onclick = () => show("idle");
+refresh();
+})();
+</script>
+</body>
+</html>
